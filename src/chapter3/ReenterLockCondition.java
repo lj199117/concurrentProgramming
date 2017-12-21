@@ -24,7 +24,8 @@ public class ReenterLockCondition implements Runnable {
         }
 
     }
-
+    
+    // 使用案例 见ArrayBlockingQueue类
     public static void main(String args[]) throws InterruptedException {
         ReenterLockCondition reenterLockCondition = new ReenterLockCondition();
         Thread thread1 = new Thread(reenterLockCondition);

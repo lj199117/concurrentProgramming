@@ -32,7 +32,9 @@ public class ThreadLocalDemo_GC {
             try {
                 if (threadLocal.get() == null) {
                     threadLocal.set(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") {
-                        protected void finalize() throws Throwable {
+						private static final long serialVersionUID = 3989320175386660361L;
+
+						protected void finalize() throws Throwable {
                             System.out.println(this.toString() + " is gc");
                         }
                     });

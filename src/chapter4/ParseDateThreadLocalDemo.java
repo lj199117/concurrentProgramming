@@ -22,6 +22,8 @@ public class ParseDateThreadLocalDemo {
         @Override
         public void run() {
             try {
+            	// 用ThreadLocal为每个线程产生一个成员变量
+            	// 如果当前线程不持有SimpleDateFormat对象实例。那么就新建一个并把它设置到当前线程中，如果已经持有，则直接使用。
                 if (threadLocal.get() == null) {
                     threadLocal.set(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
                 }

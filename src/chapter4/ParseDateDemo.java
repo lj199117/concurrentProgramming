@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
  * Created by 13 on 2017/5/6.
  */
 public class ParseDateDemo {
+	// 多线程共享该成员变量造成线程不安全
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static class ParseDate implements Runnable {
@@ -35,5 +36,6 @@ public class ParseDateDemo {
         for (int i = 0; i < 1000; i++) {
             executorService.execute(new ParseDate(i));
         }
+        executorService.shutdown();
     }
 }
