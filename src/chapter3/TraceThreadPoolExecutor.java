@@ -12,8 +12,9 @@ public class TraceThreadPoolExecutor extends ThreadPoolExecutor {
     public TraceThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
     }
-
+    // 重写父类方法
     public void execute(Runnable task) {
+    	// 对当前的运行线程进行包装wrap
         super.execute(wrap(task, clientTrace(), Thread.currentThread().getName()));
     }
 
@@ -22,7 +23,7 @@ public class TraceThreadPoolExecutor extends ThreadPoolExecutor {
             @Override
             public void run() {
                 try {
-                    task.run();
+                    task.run();// 对当前的运行线程进行try操作
                 } catch (Exception e) {
                     clientTrace.printStackTrace();
                     throw e;

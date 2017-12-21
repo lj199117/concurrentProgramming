@@ -27,8 +27,8 @@ public class NoTraceDivTaskDemo {
     public static void main(String args[]) {
         ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 0L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
         for (int i = 0; i < 5; i++) {
-            /*poolExecutor.submit(new DivTask(100, i));*/ //Ã»ÓÐ±¨´íÌáÊ¾
-            poolExecutor.execute(new DivTask(100, i));//ÓÐ±¨´íÌáÊ¾
+            /*poolExecutor.submit(new DivTask(100, i));*/ //æ²¡æœ‰æŠ¥é”™æç¤º
+            poolExecutor.execute(new DivTask(100, i));//æœ‰æŠ¥é”™æç¤º
         }
     }
 

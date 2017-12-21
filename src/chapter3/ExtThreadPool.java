@@ -44,7 +44,7 @@ public class ExtThreadPool {
                 System.out.println("线程池退出!");
             }
         };
-
+        System.out.println("可用的CPU数量="+Runtime.getRuntime().availableProcessors());
         for (int i = 0; i < 5; i++) {
             MyTask task = new MyTask("TASK-GEYM-" + i);
             executorService.execute(task);
