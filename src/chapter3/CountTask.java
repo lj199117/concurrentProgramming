@@ -31,7 +31,7 @@ public class CountTask extends RecursiveTask<Long> {
             }
         } else {
             long step = (start + end) / 100;
-
+System.err.println(step);
             ArrayList<CountTask> subTasks = new ArrayList<CountTask>();
             long pos = start;
 
@@ -41,7 +41,8 @@ public class CountTask extends RecursiveTask<Long> {
                     lastOne = end;
                 }
                 CountTask subTask = new CountTask(pos, lastOne);
-                pos += step + 1;
+System.out.println(step+"-"+pos+"-"+lastOne);
+                pos += (step + 1);
                 subTasks.add(subTask);
                 subTask.fork();// 使用fork()提交子任务
             }
