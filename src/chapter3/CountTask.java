@@ -10,7 +10,7 @@ import java.util.concurrent.RecursiveTask;
  * Created by 13 on 2017/5/5.
  */
 public class CountTask extends RecursiveTask<Long> {
-    private static final int THRESHOLD = 10000;
+    private static final int THRESHOLD = 10000; // 一个任务最多处理的求和个数
 
     private long start;
     private long end;
@@ -43,15 +43,13 @@ public class CountTask extends RecursiveTask<Long> {
                 CountTask subTask = new CountTask(pos, lastOne);
                 pos += step + 1;
                 subTasks.add(subTask);
-                subTask.fork();
+                subTask.fork();// 使用fork()提交子任务
             }
 
             for (CountTask t : subTasks) {
-                sum += (Long) t.join();
+                sum += t.join(); // 等待所有的子任务结束，并将结果再次求和
             }
         }
-
-
         return sum;
     }
 
@@ -63,7 +61,7 @@ public class CountTask extends RecursiveTask<Long> {
 
         long res = 0;
         try {
-            res = result.get();
+            res = result.get();//如果在执行get()方法时，任务没有结束，那么主线程就会在get()方法 时等待。
             System.out.println("sum=" + res);
         } catch (InterruptedException e) {
             e.printStackTrace();
