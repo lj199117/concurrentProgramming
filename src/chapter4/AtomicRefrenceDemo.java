@@ -11,7 +11,7 @@ public class AtomicRefrenceDemo {
     public static void main(String args[]) {
         final AtomicReference<Integer> money = new AtomicReference<Integer>();
         money.set(19);
-
+        // 模拟多个线程同时持续更新后台数据库，为用户充值
         for (int i = 0; i < 3; i++) {
             new Thread() {
                 public void run() {
@@ -35,6 +35,7 @@ public class AtomicRefrenceDemo {
 
         new Thread() {
             public void run() {
+            	// 模拟100次消费行为
                 for (int i = 0; i < 100; i++) {
                     while (true) {
                         Integer m = money.get();
@@ -42,7 +43,7 @@ public class AtomicRefrenceDemo {
                             System.out.println("金额大于10元");
                             if (money.compareAndSet(m, m - 10)) {
                                 System.out.println("成功消费10元,余额:" + money.get() + "元");
-                                break;
+                                break; // 当前消费行为结束,进行i++下一次消费行为
                             }
                         } else {
 //                            System.out.println("没有足够的金额");
