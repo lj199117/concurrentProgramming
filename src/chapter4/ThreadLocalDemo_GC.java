@@ -35,13 +35,13 @@ public class ThreadLocalDemo_GC {
 						private static final long serialVersionUID = 3989320175386660361L;
 
 						protected void finalize() throws Throwable {
-                            System.out.println(this.toString() + " is gc");
+                            System.out.println(this.toString() + "SimpleDateFormat is gc");
                         }
                     });
                     System.out.println(Thread.currentThread().getId() + " create SimpleDatFormat");
                 }
                 Date date = threadLocal.get().parse("2017-05-06 12:33:" + i % 60);
-                System.out.println(i + ":" + date);
+//                System.out.println(i + ":" + date);
             } catch (ParseException e) {
                 e.printStackTrace();
             } finally {
@@ -60,11 +60,11 @@ public class ThreadLocalDemo_GC {
         countDownLatch.await();
 
         System.out.println("mission complete!");
-
+        // 更容易被垃圾回收器发现回收
         threadLocal = null;
         System.gc();
         System.out.println("first GC complete!!");
-
+        // 在设置ThreadLoca1 的时候， 会清除ThreadLocalMap 中的无效对象
         threadLocal = new ThreadLocal<SimpleDateFormat>();
 
         countDownLatch = new CountDownLatch(100);
@@ -77,5 +77,7 @@ public class ThreadLocalDemo_GC {
         Thread.sleep(1000);
         System.gc();
         System.out.println("second GC complete!");
+        
+        executorService.shutdown();
     }
 }

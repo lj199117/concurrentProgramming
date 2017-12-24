@@ -63,9 +63,9 @@ public class ThreadLocalDemo {
         for (int i = 0; i < THREAD_COUT; i++) {
             totalTime += futures[i].get();
         }
-        System.out.println("¶àÏß³Ì·ÃÎÊÍ¬Ò»¸öRandomÊµÀý:" + totalTime + "ms");
+        System.out.println("å¤šçº¿ç¨‹è®¿é—®åŒä¸€ä¸ªRandomå®žä¾‹:" + totalTime + "ms");
 
-        //ThreadLocalµÄÇé¿ö
+        //ThreadLocalçš„æƒ…å†µ
         for (int i = 0; i < THREAD_COUT; i++) {
             futures[i] = executorService.submit(new RandomTask(1));
         }
@@ -73,7 +73,7 @@ public class ThreadLocalDemo {
         for (int i = 0; i < THREAD_COUT; i++) {
             totalTime += futures[i].get();
         }
-        System.out.println("Ê¹ÓÃThreadLocal°ü×°RandomÊµÀý:" + totalTime + "ms");
+        System.out.println("ä½¿ç”¨ThreadLocalåŒ…è£…Randomå®žä¾‹:" + totalTime + "ms");
 
     }
 }

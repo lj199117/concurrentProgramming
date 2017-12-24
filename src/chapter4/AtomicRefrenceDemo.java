@@ -7,26 +7,28 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class AtomicRefrenceDemo {
 
-    //ÔËĞĞÖĞ¿ÉÄÜ²»»á³öÏÖÊéÖĞÌáµ½µÄÇé¿ö
+    //è¿è¡Œä¸­å¯èƒ½ä¸ä¼šå‡ºç°ä¹¦ä¸­æåˆ°çš„æƒ…å†µ
     public static void main(String args[]) {
         final AtomicReference<Integer> money = new AtomicReference<Integer>();
         money.set(19);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 3; i++) {
             new Thread() {
                 public void run() {
-                    while (true) {
-                        Integer m = money.get();
-                        if (m < 20) {
-                            if (money.compareAndSet(m, m + 20)) {
-                                System.out.println("Óà¶îĞ¡ÓÚ20Ôª,³äÖµ³É¹¦,Óà¶î:" + money.get() + "Ôª");
+                	while(true){
+                		while (true) {
+                            Integer m = money.get();
+                            if (m < 20) {
+                                if (money.compareAndSet(m, m + 20)) {
+                                    System.out.println("ä½™é¢å°äº20å…ƒ,å……å€¼æˆåŠŸ,ä½™é¢:" + money.get() + "å…ƒ");
+                                    break;
+                                }
+                            } else {
+//                                System.out.println("ä½™é¢å¤§äº20,æ— éœ€å……å€¼");
                                 break;
                             }
-                        } else {
-                            System.out.println("Óà¶î´óÓÚ20,ÎŞĞè³äÖµ");
-                            break;
                         }
-                    }
+                	}
                 }
             }.start();
         }
@@ -34,17 +36,16 @@ public class AtomicRefrenceDemo {
         new Thread() {
             public void run() {
                 for (int i = 0; i < 100; i++) {
-
                     while (true) {
                         Integer m = money.get();
                         if (m > 10) {
-                            System.out.println("½ğ¶î´óÓÚ10Ôª");
+                            System.out.println("é‡‘é¢å¤§äº10å…ƒ");
                             if (money.compareAndSet(m, m - 10)) {
-                                System.out.println("³É¹¦Ïû·Ñ10Ôª,Óà¶î:" + money.get() + "Ôª");
+                                System.out.println("æˆåŠŸæ¶ˆè´¹10å…ƒ,ä½™é¢:" + money.get() + "å…ƒ");
                                 break;
                             }
                         } else {
-                            System.out.println("Ã»ÓĞ×ã¹»µÄ½ğ¶î");
+//                            System.out.println("æ²¡æœ‰è¶³å¤Ÿçš„é‡‘é¢");
                             break;
                         }
                     }
