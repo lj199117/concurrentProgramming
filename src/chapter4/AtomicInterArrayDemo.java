@@ -12,7 +12,7 @@ public class AtomicInterArrayDemo {
         @Override
         public void run() {
             for (int i = 0; i < 10000; i++) {
-                array.getAndIncrement(i % array.length());
+                array.getAndIncrement(i % array.length());//将第(i % array.length())个下标的元素加1
             }
         }
     }
@@ -28,7 +28,7 @@ public class AtomicInterArrayDemo {
         }
         for (int i = 0; i < 10; i++) {
             threads[i].join();
-            System.out.println(array);
         }
+        System.out.println(array);
     }
 }

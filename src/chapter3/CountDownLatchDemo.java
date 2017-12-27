@@ -29,8 +29,8 @@ public class CountDownLatchDemo implements Runnable {
 		for (int i = 0; i < 10; i++) {
 			executorService.submit(demo);
 		}
-		// 等待检查
-		end.await();
+		// 等待检查,end.countDown();执行 10次
+		end.await();//要求主线程等待所有10个检查任务全部完成。待10 个任务全部完成后， 主线程才能继续执行。
 		// 发射火箭
 		System.out.println("Fire!");
 		executorService.shutdown();

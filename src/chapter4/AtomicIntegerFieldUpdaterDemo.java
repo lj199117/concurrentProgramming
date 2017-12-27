@@ -13,7 +13,7 @@ public class AtomicIntegerFieldUpdaterDemo {
     }
 
     public final static AtomicIntegerFieldUpdater<Candidate> scoreUpdater = AtomicIntegerFieldUpdater.newUpdater(Candidate.class, "score");
-    //检查Updater是否工作正确
+    //妫�鏌pdater 鏄惁宸ヤ綔姝ｇ‘
     public static AtomicInteger allScore = new AtomicInteger(0);
 
     public static void main(String args[]) throws InterruptedException {
@@ -39,6 +39,4 @@ public class AtomicIntegerFieldUpdaterDemo {
         System.out.println("score=" + stu.score);
         System.out.println("allScore=" + allScore);
     }
-
-
 }
