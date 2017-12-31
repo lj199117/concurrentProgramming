@@ -5,7 +5,7 @@ package chapter5.simple_future;
  */
 public class FutureData implements Data {
 
-    protected RealData realData = null; // FutureData是RealData的包装
+    protected RealData realData = null; // FutureData是RealData的包装,以聚合的方式
     protected boolean isReady = false;
 
     public synchronized void setRealData(RealData realData) {
