@@ -1,11 +1,11 @@
-package chapter5;
+package chapter5.simple_future;
 
 /**
  * Created by 13 on 2017/5/8.
  */
 public class FutureData implements Data {
 
-    protected RealData realData = null;
+    protected RealData realData = null; // FutureData是RealData的包装
     protected boolean isReady = false;
 
     public synchronized void setRealData(RealData realData) {
@@ -14,7 +14,7 @@ public class FutureData implements Data {
         }
         this.realData = realData;
         isReady = true;
-        notifyAll();//RealData�Ѿ���ע��,֪ͨgetResult
+        notifyAll();//RealData已经设置成功，通知getResult()
     }
 
 
@@ -22,7 +22,7 @@ public class FutureData implements Data {
     public synchronized String getResult() {
         while (!isReady) {
             try {
-                wait();
+                wait(); // 等待RealData构造完成
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

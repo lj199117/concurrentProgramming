@@ -42,8 +42,8 @@ public class Main {
 			producer.produceData(bb);
 			producer1.produceData(bb);
 			producer2.produceData(bb);
+			System.out.println("producers add data:"+i);
 			Thread.sleep(1000);
-			System.out.println("add data:"+i);
 		}
 	}
 }

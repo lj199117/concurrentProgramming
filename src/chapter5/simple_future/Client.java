@@ -1,4 +1,4 @@
-package chapter5;
+package chapter5.simple_future;
 
 /**
  * Created by 13 on 2017/5/8.
