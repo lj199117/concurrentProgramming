@@ -19,7 +19,5 @@ public class Main {
 		service.execute(new Consummer(queue));
 		service.execute(new Consummer(queue));
 		service.execute(new Consummer(queue));
-		
-		
 	}
 }
