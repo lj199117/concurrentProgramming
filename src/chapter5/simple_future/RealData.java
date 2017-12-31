@@ -5,7 +5,7 @@ package chapter5.simple_future;
  */
 public class RealData implements Data {
 
-    protected final String result;
+    protected final String result; //则其数值一旦在初始化之后便不能更改
 
     public RealData(String param) {
         //RealData的构造很慢,需要用户等待很久,这里用sleep模拟
