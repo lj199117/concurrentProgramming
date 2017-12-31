@@ -1,6 +1,7 @@
 package chapter5;
 
 /**
+ * 最好的单例实现方式，根据类加载器的加载顺序特性实现
  * Created by 13 on 2017/5/6.
  */
 public class StaticSingleton {

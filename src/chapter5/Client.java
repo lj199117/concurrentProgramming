@@ -7,7 +7,7 @@ public class Client {
     public Data request(final String queryStr) {
         final FutureData futureData = new FutureData();
         new Thread() {
-            public void run() {//RealDataµÄ¹¹ÔìºÜÂı,ËùÒÔÔÚµ¥¶ÀµÄÏß³ÌÖĞÔËĞĞ
+            public void run() {//RealDataçš„æ„é€ å¾ˆæ…¢,æ‰€ä»¥åœ¨å•ç‹¬çš„çº¿ç¨‹ä¸­è¿è¡Œ
                 RealData realData = new RealData(queryStr);
                 futureData.setRealData(realData);
             }

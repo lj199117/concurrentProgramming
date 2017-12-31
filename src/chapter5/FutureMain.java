@@ -11,26 +11,26 @@ import java.util.concurrent.FutureTask;
 public class FutureMain {
 
     public static void main(String args[]) throws ExecutionException, InterruptedException {
-        //¹¹ÔìFutureTask
+        //æ„é€ FutureTask
         FutureTask<String> futureTask = new FutureTask<String>(new RealData2("a"));
 
         ExecutorService executorService = Executors.newFixedThreadPool(1);
 
-        //Ö´ĞĞFutureTask,Ïàµ±ÓÚÇ°Ò»¸öÀı×ÓÖĞµÄclient.request("a")·¢ËÍÇëÇó
-        //ÔÚÕâÀï¿ªÆôÏß³Ì½øĞĞRealDataµÄcall()Ö´ĞĞ
+        //æ‰§è¡ŒFutureTask,ç›¸å½“äºå‰ä¸€ä¸ªä¾‹å­ä¸­çš„client.request("a")å‘é€è¯·æ±‚
+        //åœ¨è¿™é‡Œå¼€å¯çº¿ç¨‹è¿›è¡ŒRealDataçš„call()æ‰§è¡Œ
         executorService.submit(futureTask);
 
-        System.out.println("ÇëÇóÍê±Ï");
+        System.out.println("è¯·æ±‚å®Œæ¯•");
 
         try {
-            //ÕâÀïÒÀÈ»¿ÉÒÔ×ö¶îÍâµÄÊı¾İ²Ù×÷,Ê¹ÓÃsleep´úÌæÆäËûÒµÎñÂß¼­µÄ´¦Àí
+            //è¿™é‡Œä¾ç„¶å¯ä»¥åšé¢å¤–çš„æ•°æ®æ“ä½œ,ä½¿ç”¨sleepä»£æ›¿å…¶ä»–ä¸šåŠ¡é€»è¾‘çš„å¤„ç†
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        //Ïàµ±ÓÚÇ°Ò»¸öÀı×ÓÖĞµÄdata.getResult(),È¡µÃcall()·½·¨µÄ·µ»ØÖµ
-        //Èç¹û´ËÊ±call()·½·¨Ã»ÓĞÖ´ĞĞÍê³É,ÔòÒÀÈ»»áµÈ´ı
-        System.out.println("Êı¾İ=" + futureTask.get());
+        //ç›¸å½“äºå‰ä¸€ä¸ªä¾‹å­ä¸­çš„data.getResult(),å–å¾—call()æ–¹æ³•çš„è¿”å›å€¼
+        //å¦‚æœæ­¤æ—¶call()æ–¹æ³•æ²¡æœ‰æ‰§è¡Œå®Œæˆ,åˆ™ä¾ç„¶ä¼šç­‰å¾…
+        System.out.println("æ•°æ®=" + futureTask.get());
     }
 }
