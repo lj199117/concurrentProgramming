@@ -1,4 +1,4 @@
-package chapter5;
+package chapter5.jdk_future;
 
 import java.util.concurrent.Callable;
 

@@ -3,6 +3,7 @@ package chapter4;
 import java.util.concurrent.atomic.AtomicStampedReference;
 
 /**
+ * 这是错误示范
  * AtomicStampedReferenceBeanDemo2.java才是正确的方式
  * @author <a href="mailto:lijin@webull.com">李锦</a>
  * @since 0.1.0
