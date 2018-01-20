@@ -12,7 +12,7 @@ public class FutureMain {
 
     public static void main(String args[]) throws ExecutionException, InterruptedException {
         //构造FutureTask
-        FutureTask<String> futureTask = new FutureTask<String>(new RealData2("a"));
+        FutureTask<String> futureTask = new FutureTask<String>(new RealData("a"));
 
         ExecutorService executorService = Executors.newFixedThreadPool(1);
 

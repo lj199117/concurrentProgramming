@@ -5,10 +5,10 @@ import java.util.concurrent.Callable;
 /**
  * Created by 13 on 2017/5/8.
  */
-public class RealData2 implements Callable<String> {
+public class RealData implements Callable<String> {
     private String data;
 
-    public RealData2(String data) {
+    public RealData(String data) {
         this.data = data;
     }
 

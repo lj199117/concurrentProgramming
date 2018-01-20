@@ -13,11 +13,26 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					<encoding>utf8</encoding> 
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
+	
+	
+	<distributionManagement>  
+	  <repository>  
+	      <id>releases</id>  
+	      <name>Nexus Release Repository</name>  
+	      <url>http://192.168.5.128:8081/nexus/content/repositories/releases/</url>  
+	  </repository>  
+	  <snapshotRepository>  
+	      <id>snapshots</id>  
+	      <name>Nexus Snapshot Repository</name>  
+	      <url>http://192.168.5.128:8081/nexus/content/repositories/snapshots/</url>  
+	  </snapshotRepository>  
+	</distributionManagement>  
+	
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
 		<dependency>
@@ -25,6 +40,5 @@
 			<artifactId>disruptor</artifactId>
 			<version>3.3.7</version>
 		</dependency>
-
 	</dependencies>
 </project>
