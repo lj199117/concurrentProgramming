@@ -1,4 +1,4 @@
-package chapter5.jdk_future.parallel_sum;
+package chapter5.parallel_compute.async_paraller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.concurrent.Future;
 /**
  * 并行求和 可以利用到渠道的佣金计算中,加快访问速度
  * 
- * 与{@linkplain chapter5.jdk_future.parallel_sum.CompareMain}相比较,可以看出有很大差距
+ * 与{@linkplain chapter5.parallel_compute.async_paraller.CompareMain}相比较,可以看出有很大差距
  * CompareMain :1516431789329 -> 1516431799628=10299
  * Main : 1516431869160 -> 1516431870192=1032
  * 差10个数量级

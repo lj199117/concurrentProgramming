@@ -1,4 +1,4 @@
-package chapter5.jdk_future.parallel_sum;
+package chapter5.parallel_compute.async_paraller;
 
 import java.util.concurrent.Callable;
 

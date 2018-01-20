@@ -1,4 +1,4 @@
-package chapter5.parallel_compute;
+package chapter5.parallel_compute.sync_paraller;
 
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;

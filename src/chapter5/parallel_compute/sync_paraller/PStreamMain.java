@@ -1,4 +1,4 @@
-package chapter5.parallel_compute;
+package chapter5.parallel_compute.sync_paraller;
 
 /**
  * Created by 13 on 2017/5/9.
