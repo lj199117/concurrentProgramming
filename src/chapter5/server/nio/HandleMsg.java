@@ -39,7 +39,7 @@ public class HandleMsg implements Runnable{
         String msg = new String(data).trim();
         try {
 			Double value = Calculator.conversion(msg);
-			echoClient.enqueue(charset.encode(value.toString()));
+			echoClient.enqueue(charset.encode(msg + "=" + value.toString()));
 		} catch (Exception e) {
 			echoClient.enqueue(ByteBuffer.wrap("error formatter!".getBytes()));
 		}

@@ -50,7 +50,7 @@ public class EchoNIOClientInter {
             channel.finishConnect();    //如未连接，那么调用finishConnect完成连接
         }
         channel.configureBlocking(false);   //设置这个channel为非阻塞状态，奇怪的是，应该在之前设置了，为什么这里还要设置
-        channel.write(ByteBuffer.wrap(new String("hello server!\r\n").getBytes())); //将一个语句放入ByteBuffer后写入，即写想了服务器端
+        channel.write(ByteBuffer.wrap(new String("1+1+1").getBytes())); //将一个语句放入ByteBuffer后写入，即写想了服务器端
         channel.register(this.selector, SelectionKey.OP_READ);  //写入完成后就需要等待Server的回复，因此将此channel登记为对读感兴趣，此时已经连接上了就不需要再对connect感兴趣了
     }
 
