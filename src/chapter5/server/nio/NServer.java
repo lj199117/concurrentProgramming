@@ -70,10 +70,11 @@ public class NServer {
 							sk.channel().close();
 						}
 					}
+					
 					//如果content的长度大于0，即聊天信息不为空
 					if(content.length()>0){
-						//遍历该selector里注册的所有SelectKey
-						for(SelectionKey key:selector.keys()){
+						//遍历该selector里注册的所有SelectKey(造成的问题就是多个客户端会收到同一内容)
+						/*for(SelectionKey key:selector.keys()){
 							//选取该key对应的Channel
 							Channel targetChannel=key.channel();
 							//如果该channel是SocketChannel对象
@@ -82,7 +83,10 @@ public class NServer {
 								SocketChannel dest=(SocketChannel) targetChannel;
 								dest.write(charset.encode(content));
 							}
-						}
+						}*/
+						
+						// 解决多个客户端会收到同一内容
+						sc.write(charset.encode(content));
 					}
 				}
 			}

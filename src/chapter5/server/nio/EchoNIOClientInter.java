@@ -1,6 +1,7 @@
 package chapter5.server.nio;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -17,9 +18,10 @@ public class EchoNIOClientInter {
     private Selector selector;
 
     public void init(String ip , int port) throws IOException {
-        SocketChannel channel = SocketChannel.open();
-        channel.configureBlocking(false);   //创建一个SocketChannel实例并设置为非阻塞模式
-        this.selector = SelectorProvider.provider().openSelector();     //实例化一个Selector用于IO复用
+    	this.selector = SelectorProvider.provider().openSelector();     //实例化一个Selector用于IO复用
+    	
+    	SocketChannel channel = SocketChannel.open();
+    	channel.configureBlocking(false);   //创建一个SocketChannel实例并设置为非阻塞模式
         channel.connect(new InetSocketAddress(ip, port));   //channel连接具体指定的ip地址：端口，但此时不一定就连接上了
         channel.register(selector, SelectionKey.OP_CONNECT);    //将此通道登记在selector，感兴趣的事件是connect
     }
@@ -58,7 +60,7 @@ public class EchoNIOClientInter {
         SocketChannel channel = (SocketChannel) sk.channel();   //获取具体的channel
         ByteBuffer buffer = ByteBuffer.allocate(100);
         String msg = "";
-        while(channel.read(buffer)>0){
+        while(channel.read(buffer) > 0){
         	buffer.flip();
         	msg += charset.decode(buffer);
 		}
@@ -92,7 +94,8 @@ public class EchoNIOClientInter {
     public static void main(String[] args) {
 		try {
 			EchoNIOClientInter echoNIOClient = new EchoNIOClientInter();
-			echoNIOClient.init("127.0.0.1", 12345);
+			InetAddress localHost = InetAddress.getLocalHost();
+			echoNIOClient.init(localHost.getHostAddress(), 12345);
 			echoNIOClient.working();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

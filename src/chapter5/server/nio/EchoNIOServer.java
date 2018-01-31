@@ -32,14 +32,13 @@ public class EchoNIOServer {
 		 * 我们唯一可以指定的参数就是OP_ACCEPT
 		 */
 		selector = SelectorProvider.provider().openSelector(); //通过工厂方法获得一个Selector对象的实例
+		
 		//ServerSocketChannel为SelectableChannel的一种抽象实现
 		ServerSocketChannel ssc = ServerSocketChannel.open();//获得表示服务端的SocketChannel实例
 		ssc.configureBlocking(false);
-		
 		InetAddress localHost = InetAddress.getLocalHost();
-		System.out.println(localHost);
-		InetSocketAddress isa = new InetSocketAddress("127.0.0.1", 12345);
-		ssc.socket().bind(isa);//将这个Channel绑定在8000 端口
+		InetSocketAddress isa = new InetSocketAddress(localHost, 12345);
+		ssc.socket().bind(isa);//将该ServerSocketChannel绑定到指定ip地址
 		
 		/**
 		 * 将SelectableChannel(ssc)注册到selector上面，并说明感兴趣的事件为Accept;
@@ -107,7 +106,7 @@ public class EchoNIOServer {
 			SelectionKey clientKey = clientChannel.register(selector, SelectionKey.OP_READ);
 			/**
 			 * 将这个客户端实例作为附件，附加到表示这个连接的SelectionKey上。
-			 * 这样在整个连接的处理过程中， 我们都可以共享这个EchoClient实例。
+			 * 这样在整个连接的处理过程中(读写操作可以通过共享数据)， 我们都可以共享这个EchoClient实例。
 			 */
 			EchoClient echoClient = new EchoClient();
 			clientKey.attach(echoClient);
@@ -124,6 +123,13 @@ public class EchoNIOServer {
 	 * @since 0.1.0
 	 */
 	private void doRead(SelectionKey sk) {
+		/**
+		 * Channel通道不同于流的地方就是通道是双向的，可以用于读、写和同时读写操作。
+		 * 所以拿到一个Channel就同时拿到了服务端与客户端，
+		 * channel.read(bb) // 从客户端读
+		 * channel.write(bb) // 写到客户端
+		 */
+		
 		//通过这个SelectionKey可以得到当前的客户端Channel
 		SocketChannel channel = (SocketChannel) sk.channel();
 		ByteBuffer bb = ByteBuffer.allocate(8192);//8K的缓冲区读取数据
@@ -185,26 +191,23 @@ public class EchoNIOServer {
 		}
 	}
 	
+	/**
+	 * 如果捕捉到该sk对应的channel出现异常，
+	 * 即表明该channel对应的client出现了异常，所以从selector中取消sk的注册
+	 * @param sk
+	 * @since 0.1.0
+	 */
 	private void disConnect(SelectionKey sk) {
-		//selector关闭后会自动释放里面管理的资源  
-        if(selector != null){
-        	try{  
-        		selector.close();  
-        	}catch (Exception e) {  
-        		e.printStackTrace();  
-        	}  
-        }
-        sk.cancel();
+		//从Selector中删除指定的SelectionKey
+		sk.cancel();
 		if(sk.channel() != null){
 			try {
 				sk.channel().close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-        tp.shutdown();
-        System.err.println("disConnect server...");
+        System.err.println("disConnect channel...");
 	}
 	
 
