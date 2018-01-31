@@ -27,6 +27,8 @@ public class NClient {
 		sc.configureBlocking(false);
 		//将Socketchannel对象注册到指定Selector
 		sc.register(selector, SelectionKey.OP_READ);
+		
+		
 		//启动读取服务器端数据的线程
 		new ClientThread().start();
 		//创建键盘输入流
