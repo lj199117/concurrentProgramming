@@ -1,4 +1,4 @@
-package chapter5.server.socket.pratice;
+package chapter5.server.bio.pratice;
 
 import java.io.BufferedReader;
 import java.io.IOException;
