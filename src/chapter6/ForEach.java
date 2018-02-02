@@ -1,6 +1,7 @@
 package chapter6;
 
 import java.util.Arrays;
+import java.util.PrimitiveIterator.OfInt;
 
 public class ForEach {
 	static int[] arr = {1,2,3,4,5,6,7,8};
@@ -15,6 +16,11 @@ public class ForEach {
 		System.out.println();
 		// out的同理写法
 		Arrays.stream(arr).map(x -> x%2 == 0 ? x : x+1).forEach(System.out::print);
+		System.out.println();
+		OfInt ofInt = Arrays.stream(arr).map(x -> x%2 == 0 ? x : x+1).iterator();//forEach(System.out::print);
+		while(ofInt.hasNext()){
+			System.out.print(ofInt.nextInt());
+		}
 	}
 	
 	// 奇数则加一

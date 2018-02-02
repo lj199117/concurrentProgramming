@@ -1,6 +1,7 @@
 package chapter6;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -19,6 +20,12 @@ public class StreamMain {
 		Predicate<User> predicate = u -> u.age > 6;
 		Predicate<User> otherPredicate = u -> u.age == 3;
 		list.stream().filter(predicate.or(otherPredicate)).forEach(System.out::print);
+		System.out.println("Stream不能复用,上面forEach应用完,该Stream会关闭");
+		Iterator<User> it = list.stream().filter(predicate.or(otherPredicate)).iterator();
+		while (it.hasNext()) {
+			User u = it.next();
+			System.out.print(u);
+		}
 	}
 
 	private static void init(List<User> list) {
