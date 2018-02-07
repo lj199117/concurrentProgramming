@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.IntSummaryStatistics;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -40,7 +41,8 @@ public class StreamMain {
 		
 		// 4并行流,得到这个集合中用户的年龄一些统计数据
 		// 并行流
-		IntSummaryStatistics statistics = list.parallelStream().collect(Collectors.summarizingInt(User::getAge));
+		IntSummaryStatistics statistics = list.parallelStream().collect(
+				Collectors.summarizingInt(User::getAge));
 		System.out.println(statistics.getSum());
 		System.out.println(statistics.getCount());
 		System.out.println(statistics.getMax());
@@ -65,6 +67,29 @@ public class StreamMain {
 		        .map(User::getMoney)
 		        .reduce(BigDecimal.ZERO, BigDecimal::add);
 		System.out.println("afResult2=" + afResult2);
+		
+		// 5提取对象中的字段并封装成新对象列表
+		List<String> uIdList = list.stream().collect(ArrayList::new, (firstItem, nextItem) -> {
+			firstItem.add(nextItem.getName());
+		}, List::addAll);
+		uIdList.stream().forEach(System.out::print);
+		System.out.println();
+		
+		// 6 list分页
+		int batchSize = 3;
+		int size = list.size();
+		for(int i = 0; i < size / batchSize + 1; i++){
+			List<User> batchModel = new ArrayList<>();
+			list.stream().skip(i * batchSize).limit(batchSize).forEach(e -> batchModel.add(e));
+			batchModel.stream().forEach(b -> System.out.print(b.getName()));
+			System.out.println();
+		}
+		System.out.println("batch finish");
+		
+		// 7 提取Bean元素成Map
+		Map<Integer, String> mapUser = list.stream().collect(Collectors.toMap(User::getAge, User::getName));
+		mapUser.forEach((k,v) -> System.out.println("key:"+k+"-value:"+v));
+		System.out.println();
 	}
 
 	private static void init(List<User> list) {
