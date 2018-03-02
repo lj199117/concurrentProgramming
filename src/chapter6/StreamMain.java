@@ -69,10 +69,30 @@ public class StreamMain {
 		System.out.println("afResult2=" + afResult2);
 		
 		// 5提取对象中的字段并封装成新对象列表
+		List<AdminUser> adminUList = list.stream().map(u -> {
+			AdminUser au = new AdminUser();
+			au.age = u.age;
+			au.name = u.name;
+			return au;
+		}).collect(Collectors.toList());
+		adminUList.stream().forEach(System.out::print);
+		System.out.println();
+		
+		// 5-1提取对象中的字段并封装成新列表
 		List<String> uIdList = list.stream().collect(ArrayList::new, (firstItem, nextItem) -> {
 			firstItem.add(nextItem.getName());
 		}, List::addAll);
 		uIdList.stream().forEach(System.out::print);
+		System.out.println();
+		
+		// 换一种方式
+		List<String> uNameList = list.stream().map(User::getName).collect(Collectors.toList());
+		uNameList.stream().forEach(System.out::print);
+		System.out.println();
+		
+		// 换一种方式
+		List<String> uNameParseList = list.stream().map(u -> "_P".concat(u.getName())).collect(Collectors.toList());
+		uNameParseList.stream().forEach(System.out::print);
 		System.out.println();
 		
 		// 6 list分页
@@ -141,4 +161,15 @@ class User {
 		builder.append("User [name=").append(name).append(", age=").append(age).append("]");
 		return builder.toString();
 	};
+}
+
+class AdminUser {
+	String name;
+	int age;
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("AdminUser [name=").append(name).append(", age=").append(age).append("]");
+		return builder.toString();
+	}
 }
