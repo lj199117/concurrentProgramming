@@ -18,8 +18,12 @@ public class RealData implements Callable<String> {
         for (int i = 0; i < 10; i++) {
             stringBuffer.append(data);
             Thread.sleep(100);
+            
+			if(i == 8) {
+				throw new Exception("error");
+			}
         }
-
+        
         return stringBuffer.toString();
     }
 }

@@ -16,7 +16,7 @@ public class ReenterLockCondition implements Runnable {
         try {
             lock.lock();
             condition.await();
-            System.out.println("Thread is going on");
+            System.out.println(Thread.currentThread().getName() + "Thread is going on");
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
@@ -30,8 +30,8 @@ public class ReenterLockCondition implements Runnable {
         ReenterLockCondition reenterLockCondition = new ReenterLockCondition();
         Thread thread1 = new Thread(reenterLockCondition);
         thread1.start();
-//        Thread thread2 = new Thread(reenterLockCondition);
-//        thread2.start();
+        Thread thread2 = new Thread(reenterLockCondition);
+        thread2.start();
         Thread.sleep(2000);
         // 通知线程t1 继续执行
         lock.lock();
