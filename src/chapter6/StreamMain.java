@@ -70,7 +70,7 @@ public class StreamMain {
 		        .reduce(BigDecimal.ZERO, BigDecimal::add);
 		System.out.println("afResult2=" + afResult2);
 		
-		// 5提取对象中的字段并封装成新对象列表
+		// 5提取对象中的字段并封装成新对象列表, 并不会打乱原list的顺序
 		List<AdminUser> adminUList = list.stream().map(u -> {
 			AdminUser au = new AdminUser();
 			au.age = u.age;
@@ -111,6 +111,16 @@ public class StreamMain {
 		// 7 提取Bean元素成Map
 		Map<Integer, String> mapUser = list.stream().collect(Collectors.toMap(User::getAge, User::getName));
 		mapUser.forEach((k,v) -> System.out.println("key:"+k+"-value:"+v));
+		System.out.println();
+		
+		// 7.1 提取Bean元素成Map, value为本身
+		Map<Integer, User> mapUserBean1 = list.stream().collect(Collectors.toMap(User::getAge, user -> user));
+		mapUserBean1.forEach((k,v) -> System.out.println("key:"+k+"-value:"+v));
+		System.out.println();
+		
+		// 7.2 提取Bean元素成Map, value为本身
+		Map<Integer, User> mapUserBean2 = list.stream().collect(Collectors.toMap(User::getAge, Function.identity()));
+		mapUserBean2.forEach((k,v) -> System.out.println("key:"+k+"-value:"+v));
 		System.out.println();
 		
 		// 8 distinct

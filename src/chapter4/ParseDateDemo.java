@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
  */
 public class ParseDateDemo {
 	// 多线程共享该成员变量造成线程不安全
+	// 参考 https://www.cnblogs.com/zemliu/archive/2013/08/29/3290585.html
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static class ParseDate implements Runnable {

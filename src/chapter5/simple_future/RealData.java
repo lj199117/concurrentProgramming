@@ -13,7 +13,7 @@ public class RealData implements Data {
         for (int i = 0; i < 10; i++) {
             stringBuffer.append(param);
             try {
-                Thread.sleep(100);
+                Thread.sleep(300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
