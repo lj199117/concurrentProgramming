@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -17,8 +19,48 @@ public class MapIfPresent {
 
 	public static void main(String[] args) throws InterruptedException {
 		testComputeIfAbsent();
-
+		System.err.println("-------------------");
 		testComputeIfPresent();
+		System.err.println("-------------------");
+		testComputeIfPresent2();
+		System.err.println("-------------------");
+	}
+
+	static Map<String, Integer> map1 = new HashMap<>();
+	static Map<String, Integer> map2 = new HashMap<>();
+	static {
+		map1.put("a", 1); map1.put("b", 2); map1.put("c", 3);
+		map2.put("a", 4); map2.put("b", 5); map2.put("c", 6); map2.put("d", 10);
+	}
+	private static void testComputeIfPresent2() {
+		Set<String> mapKeys = new HashSet<>(map1.keySet());
+		mapKeys.addAll(map2.keySet());
+		
+		/**
+		 * 只有在当前Map中存在key值的映射且非null时，才调用remappingFunction，
+		 * 如果remappingFunction执行结果为null，则删除key的映射，否则使用该结果替换key原来的映射
+		 */
+		Map<String, Integer> combineMap = new HashMap<>();
+		mapKeys.forEach(type -> {
+			combineMap.computeIfAbsent(type, key -> genVal(key)); // 合并两个map相同key的value做和
+			combineMap.computeIfPresent(type, (key, oldVal) -> genNewVal(key, oldVal)); // 将和值翻倍 & 删除key为b的元素
+		});
+		
+		System.out.println(combineMap);
+	}
+
+	private static Integer genVal(String key) {
+		Integer newVal = Optional.ofNullable(map1.get(key)).orElse(0) + 
+				Optional.ofNullable(map2.get(key)).orElse(0);
+		System.out.println(key + "->" + newVal);
+		return newVal;
+	}
+
+	private static Integer genNewVal(String key, Integer oldVal) {
+		Integer newVal = oldVal * 2;
+		System.out.println(key + "->" + oldVal + "->" + newVal);
+		if(key.equals("b")) return null; // 删除key为b的元素
+		return newVal;
 	}
 
 	private static void testComputeIfPresent() throws InterruptedException {
@@ -43,7 +85,7 @@ public class MapIfPresent {
 		 *  
 		 *  注意: 尝试把  && c.isEmpty()注销可以看到效果
 		 */
-	    strings.computeIfPresent(index, (key, value) -> value.remove(a) && value.isEmpty() ? null : value);
+	    strings.computeIfPresent(index, (key, oldValue) -> oldValue.remove(a) && oldValue.isEmpty() ? null : oldValue);
 	}
 	
 	// 测试多线程并发处理，是否同步操作
