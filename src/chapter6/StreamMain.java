@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class StreamMain {
 	@FunctionalInterface
@@ -130,6 +131,18 @@ public class StreamMain {
 		// 9 distinct
 		list.stream().filter(data -> data.getAge() > 5).filter(distinctByKey(User::getAge)).forEach(System.out::print);
 		System.out.println();
+		
+		// 10 基本类型的比较
+		final List <Integer> listBox = IntStream.rangeClosed(1, 20).boxed().collect(Collectors.toList());
+		System.out.println(listBox.stream().max(Integer::compare).get()); // 正确方式
+		System.out.println(listBox.stream().max(Integer::max).get()); // error 不能这么玩
+		System.out.println(listBox.stream().min(Integer::min).get()); // error 不能这么玩
+		
+		// 11 forEach throws
+		list.stream().forEach(u -> {
+			if(u.getAge() == 7) throw new RuntimeException("throws...");
+			System.out.println(u);
+		});
 	}
 
 	private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
