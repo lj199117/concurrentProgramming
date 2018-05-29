@@ -92,6 +92,7 @@ public class MapIfPresent {
 	private static void testComputeIfAbsent() throws InterruptedException {
 		Map<String, HashSet<String>> map = new ConcurrentHashMap<>(); // 注意HashSet并不是线程安全的
 		Map<String, Vector<String>> map1 = new ConcurrentHashMap<>(); // Vector为线程安全
+		Map<String, String> map2 = new ConcurrentHashMap<>(); // Vector为线程安全
 		ExecutorService exec = Executors.newCachedThreadPool();
 		for (int i = 0; i < 10; i++) {
 			int incrementAndGet = ai.incrementAndGet();
@@ -100,13 +101,16 @@ public class MapIfPresent {
 				public void run() {
 					map.computeIfAbsent("name", k -> genValue(k)).add("name" + incrementAndGet);
 					map1.computeIfAbsent("name", k -> genVecValue(k)).add("name" + incrementAndGet);
+					
+					map2.computeIfAbsent(String.valueOf(incrementAndGet), k -> k);
 				}
 			});
 		}
 		exec.shutdown();
 		exec.awaitTermination(1, TimeUnit.SECONDS);
-		System.out.println("map:" + map);
+		System.out.println("map :" + map);
 		System.out.println("map1:" + map1);
+		System.out.println("map2:" + map2);
 	}
 
 	// 根据key 产生一个value, 只会调用一次

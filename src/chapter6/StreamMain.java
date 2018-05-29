@@ -164,10 +164,14 @@ public class StreamMain {
 
 class User {
 	String name;
-	int age;
+	Integer age;
 	BigDecimal money;
+	
+	public User() {
+		super();
+	}
 
-	public User(int age, String name, BigDecimal money) {
+	public User(Integer age, String name, BigDecimal money) {
 		super();
 		this.name = name;
 		this.age = age;
@@ -186,7 +190,7 @@ class User {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 
@@ -208,7 +212,32 @@ class User {
 
 class AdminUser {
 	String name;
-	int age;
+	Integer age;
+	
+	public AdminUser() {}
+
+	public AdminUser(String name, Integer age) {
+		super();
+		this.name = name;
+		this.age = age;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
