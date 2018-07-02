@@ -20,7 +20,7 @@ public class RealData implements Callable<String> {
             Thread.sleep(100);
             
 			if(i == 8) {
-				throw new Exception("error");
+				throw new RuntimeException("error");
 			}
         }
         

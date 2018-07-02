@@ -17,17 +17,16 @@ public class FutureMain {
 		// 构造FutureTask,相当于之前介绍的RealData
 		FutureTask<String> futureTask = new FutureTask<String>(new RealData("a"));
 
-		ExecutorService executorService = Executors.newCachedThreadPool( new ThreadFactory() {
+		ExecutorService executorService = Executors.newCachedThreadPool(new ThreadFactory() {
 		    @Override
 		    public Thread newThread(Runnable target) {
 		        final Thread thread = new Thread(target);
 		        thread.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
 		            @Override
 		            public void uncaughtException(Thread t, Throwable e) {
-		            	e.printStackTrace();
-		            	System.out.println("-----throws exception-------");
+		            	System.out.println("-----throws exception-------" + e.getMessage());
 		            }
-		 
+		            
 		        });
 		        return thread;
 		    }
@@ -38,11 +37,17 @@ public class FutureMain {
 		// 执行FutureTask,相当于前一个例子中的client.request("a")发送请求
 		// 在这里开启线程进行RealData的call()执行
 		Future<?> future = executorService.submit(futureTask);
-		System.out.println("future:" + future.get());
-			futureTask.get(); // what is the diff bwt future and futureTask?
 		System.out.println("请求完毕");
+		System.out.println("future:" + future.get());
+		System.out.println("futureTask:" + futureTask.get()); // what is the diff bwt future and futureTask?
 
-//		executorService.execute(futureTask);
+		/*executorService.execute(new Runnable() {
+			@Override
+			public void run() {
+				throw new RuntimeException("lijin ex");
+			}
+		});
+		executorService.execute(futureTask);*/
 		try {
 			// 这里依然可以做额外的数据操作,使用sleep代替其他业务逻辑的处理
 			Thread.sleep(1000);
@@ -54,6 +59,8 @@ public class FutureMain {
 		// 如果此时call()方法没有执行完成,则依然会等待
 		System.out.println("数据=" + futureTask.get());
 	}
+	
+	
 
 	private static class ExceptionCatchingThreadFactory implements ThreadFactory {
 		private final ThreadFactory delegate;

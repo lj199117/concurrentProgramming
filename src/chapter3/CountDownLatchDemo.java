@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
  * Created by 13 on 2017/5/5.
  */
 public class CountDownLatchDemo implements Runnable {
-	static final CountDownLatch end = new CountDownLatch(10);
+	static final CountDownLatch endLatch = new CountDownLatch(10);
 	static final CountDownLatchDemo demo = new CountDownLatchDemo();
 
 	@Override
@@ -18,7 +18,7 @@ public class CountDownLatchDemo implements Runnable {
 		try {
 			Thread.sleep(new Random().nextInt(5) * 1000);
 			System.out.println("check complete");
-			end.countDown();
+			endLatch.countDown();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -30,7 +30,7 @@ public class CountDownLatchDemo implements Runnable {
 			executorService.submit(demo);
 		}
 		// 等待检查,end.countDown();执行 10次
-		end.await();//要求主线程等待所有10个检查任务全部完成。待10 个任务全部完成后， 主线程才能继续执行。
+		endLatch.await();//要求主线程等待所有10个检查任务全部完成。待10 个任务全部完成后， 主线程才能继续执行。
 		// 发射火箭
 		System.out.println("Fire!");
 		executorService.shutdown();
