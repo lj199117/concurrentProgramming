@@ -40,7 +40,7 @@ public class FutureMain {
 		System.out.println("请求完毕");
 		System.out.println("future:" + future.get());
 		System.out.println("futureTask:" + futureTask.get()); // what is the diff bwt future and futureTask?
-
+		
 		/*executorService.execute(new Runnable() {
 			@Override
 			public void run() {
