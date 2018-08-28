@@ -19,9 +19,9 @@ public class RealData implements Callable<String> {
             stringBuffer.append(data);
             Thread.sleep(100);
             
-			if(i == 8) {
+			/*if(i == 8) {
 				throw new RuntimeException("error");
-			}
+			}*/
         }
         
         return stringBuffer.toString();

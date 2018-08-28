@@ -128,9 +128,9 @@ public class StreamMain {
 		list.stream().filter(data -> data.getAge() > 5).map(User::getAge).distinct().forEach(System.out::print);
 		System.out.println();
 		
-		// 9 distinct
+		// 9 distinct, 将集合中指定属性重复的item去重
 		list.stream().filter(data -> data.getAge() > 5).filter(distinctByKey(User::getAge)).forEach(System.out::print);
-		System.out.println();
+		System.out.println("==============9==============");
 		
 		// 10 基本类型的比较
 		final List <Integer> listBox = IntStream.rangeClosed(1, 20).boxed().collect(Collectors.toList());
@@ -153,10 +153,10 @@ public class StreamMain {
 	private static void init(List<User> list) {
 		for (int i = 0; i < 10; i++) {
 			int age = i;
-			// test: 8 distinct
-//			if(i >= 7) {
-//				age = 7;
-//			}
+			// test: 8&9 distinct
+			if(i >= 7) {
+				age = 7;
+			}
 			list.add(uf.create(age, "User" + i, BigDecimal.valueOf(i)));
 		}
 	}
