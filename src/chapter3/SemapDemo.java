@@ -14,10 +14,10 @@ public class SemapDemo implements Runnable {
     @Override
     public void run() {
         try {
-            semp.acquire();
+            semp.acquire(); // 从信号量中获取一个允许机会
             Thread.sleep(2000);
             System.out.println(Thread.currentThread().getId() + ":done!");
-            semp.release();
+            semp.release(); // 释放允许，将占有的信号量归还
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

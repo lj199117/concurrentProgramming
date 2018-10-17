@@ -18,6 +18,8 @@ public class MapIfPresent {
 	private static final AtomicInteger ai = new AtomicInteger();
 
 	public static void main(String[] args) throws InterruptedException {
+		testMerge();
+		System.err.println("-------------------");
 		testComputeIfAbsent();
 		System.err.println("-------------------");
 		testComputeIfPresent();
@@ -32,6 +34,24 @@ public class MapIfPresent {
 		map1.put("a", 1); map1.put("b", 2); map1.put("c", 3);
 		map2.put("a", 4); map2.put("b", 5); map2.put("c", 6); map2.put("d", 10);
 	}
+
+	// 按照属性男女分组，然后把年龄汇总
+	private static void testMerge() {
+		//学生的集合
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("张三","男",18));
+        students.add(new Student("李四","男",20));
+        students.add(new Student("韩梅梅","女",18));
+        students.add(new Student("小红","女",45));
+
+        //声明接收结果的 map
+        Map<String, Integer> resultMap = new HashMap<>();
+        for (Student student : students) {
+            resultMap.merge(student.getSex(), student.getAge(), (a, b) -> b + a);
+        }
+		System.out.println(resultMap);
+	}
+
 	private static void testComputeIfPresent2() {
 		Set<String> mapKeys = new HashSet<>(map1.keySet());
 		mapKeys.addAll(map2.keySet());
@@ -102,7 +122,7 @@ public class MapIfPresent {
 					map.computeIfAbsent("name", k -> genValue(k)).add("name" + incrementAndGet);
 					map1.computeIfAbsent("name", k -> genVecValue(k)).add("name" + incrementAndGet);
 					
-					map2.computeIfAbsent(String.valueOf(incrementAndGet), k -> k);
+					map2.computeIfAbsent(String.valueOf(incrementAndGet), k -> k + ":" + k);
 				}
 			});
 		}
