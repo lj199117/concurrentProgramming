@@ -15,7 +15,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class MapIfPresent {
+/**
+ * map中的一些方法：merge ifabsent ifpresent
+ * @author goldl
+ *
+ */
+public class MapStream {
 	static Map<String, Collection<String>> strings = new HashMap<>();
 	private static final AtomicInteger ai = new AtomicInteger();
 
