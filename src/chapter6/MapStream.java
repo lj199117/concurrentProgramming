@@ -18,7 +18,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * map中的一些方法：merge ifabsent ifpresent
  * @author goldl
- *
+ * 参考： https://blog.csdn.net/u010938610/article/details/82622144
+ * compute：原map不管是否存在key都会执行remappingFunction
+ * computeifabsent：原map不存在该key的时候才执行remappingFunction
+ * computeifpresent：原map存在该key的时候才执行remappingFunction
  */
 public class MapStream {
 	static Map<String, Collection<String>> strings = new HashMap<>();
