@@ -1,5 +1,6 @@
 package chapter3;
 
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
@@ -10,7 +11,7 @@ import java.util.concurrent.Semaphore;
  */
 public class SemapDemo implements Runnable {
     final Semaphore semp = new Semaphore(5);
-
+    final Random r = new Random();
     @Override
     public void run() {
         try {
