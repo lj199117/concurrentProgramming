@@ -1,4 +1,4 @@
-package chapter3;
+package chapter3.threadpool.test1;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
