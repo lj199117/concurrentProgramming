@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -98,6 +100,29 @@ public class StreamMain {
 		uNameParseList.stream().forEach(System.out::print);
 		System.out.println();
 		
+		// 用reduce进行更复杂的操作(拼装每个人的自我介绍)
+		// BiFunction的三个参数: 第一个入参类型，第二个入参类型，第三个出参类型
+		List<String> introduce = list.stream().reduce(new ArrayList<String>(), new BiFunction<ArrayList<String>, User, ArrayList<String>>() {
+			@Override
+			public ArrayList<String> apply(ArrayList<String> t, User u) {
+				t.add("大家好，我叫" + u.getName() + ",我今年" + u.getAge() + "岁了\r");
+				return t;
+			}
+		}, new BinaryOperator<ArrayList<String>>() {
+			@Override
+			public ArrayList<String> apply(ArrayList<String> t, ArrayList<String> u) {
+				return t;
+			}
+		});
+		System.out.println(introduce);
+		
+		// 简化上面的结构
+		List<String> introduce1 = list.stream().reduce(new ArrayList<String>(), (a, b) -> {
+			a.add("_大家好，我叫" + b.getName() + ",我今年" + b.getAge() + "岁了\r");
+			return a;
+		}, (a, b) -> a);
+		System.out.println(introduce1);
+		
 		// 6 list分页
 		int batchSize = 3;
 		int size = list.size();
@@ -154,9 +179,9 @@ public class StreamMain {
 		for (int i = 0; i < 10; i++) {
 			int age = i;
 			// test: 8&9 distinct
-			if(i >= 7) {
+			/*if(i >= 7) {
 				age = 7;
-			}
+			}*/
 			list.add(uf.create(age, "User" + i, BigDecimal.valueOf(i)));
 		}
 	}
