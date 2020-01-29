@@ -16,7 +16,7 @@ public class ReenterLockCondition implements Runnable {
         try {
             lock.lock();
             condition.await();
-            System.out.println(Thread.currentThread().getName() + "Thread is going on");
+            System.out.println(Thread.currentThread().getName() + " Thread is going on");
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
@@ -33,8 +33,8 @@ public class ReenterLockCondition implements Runnable {
         Thread thread2 = new Thread(reenterLockCondition);
         thread2.start();
         Thread.sleep(2000);
-        // 通知线程t1 继续执行
         lock.lock();
+        // 通知某个线程 继续执行
         condition.signal(); // 在signal()方法调用后，系统会从当前Condition 对象的等待队列中，唤醒一个线程(如果Condition等待队列有多个线程，需要signalAll)
         lock.unlock(); // 必须释放锁，让Condition等待队列中的线程去争夺资源
     }
