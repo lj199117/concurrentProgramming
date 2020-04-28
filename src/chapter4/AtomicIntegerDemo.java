@@ -5,13 +5,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class AtomicIntegerDemo {
     static AtomicInteger i = new AtomicInteger();
-
+    static int ii = 0;
+    
+    
     public static class AddThread implements Runnable {
 
         @Override
         public void run() {
-            for (int j = 0; j < 10002; j++) {
+            for (int j = 0; j < 10000; j++) {
                 i.incrementAndGet();
+                ii++;
             }
         }
     }
@@ -32,5 +35,6 @@ public class AtomicIntegerDemo {
         }
 
         System.out.println(i);
+        System.out.println(ii);
     }
 }

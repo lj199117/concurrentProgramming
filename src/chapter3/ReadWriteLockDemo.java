@@ -1,6 +1,9 @@
 package chapter3;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -37,7 +40,7 @@ public class ReadWriteLockDemo {
         }
     }
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws InterruptedException {
         final ReadWriteLockDemo demo = new ReadWriteLockDemo();
 
         Runnable readRunnable = new Runnable() {
@@ -67,11 +70,13 @@ public class ReadWriteLockDemo {
 
             }
         };
-        for (int i = 18; i < 20; i++) {
-        	new Thread(writeRunnable).start();
+        ExecutorService es = Executors.newFixedThreadPool(20);
+        for (int i = 0; i < 2; i++) {
+        	es.submit(writeRunnable);
         }
-        for (int i = 0; i < 18; i++) {
-            new Thread(readRunnable).start();
+        for (int i = 0; i < 10; i++) {
+            es.submit(readRunnable);
         }
+        es.awaitTermination(10, TimeUnit.SECONDS);
     }
 }
