@@ -40,6 +40,13 @@ public class LockSupportIntDemo {
         Thread.sleep(100);
         t2.start();
         t1.interrupt();
+        /**
+         * 如果给定线程的许可尚不可用，则使其可用。
+         * 如果线程在 park 上受阻塞，则它将解除其阻塞状态。
+         * 否则，保证下一次调用 park 不会受阻塞。
+         * 如果给定线程尚未启动，则无法保证此操作有任何效果。 
+         * @param thread: 要执行 unpark 操作的线程；该参数为 null 表示此操作没有任何效果。
+         */
         LockSupport.unpark(t2);
         t1.join();
         t2.join();

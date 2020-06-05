@@ -1,5 +1,8 @@
 package chapter1;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by 13 on 2017/5/4.
  */
@@ -60,10 +63,13 @@ public class MultiThreadLong {
     }
 
     public static void main(String args[]) {
-        new Thread(new ChangeT(111L)).start();
-        new Thread(new ChangeT(-999L)).start();
-        new Thread(new ChangeT(333L)).start();
-        new Thread(new ChangeT(-444L)).start();
-        new Thread(new ReadT()).start();
+        Map<String, String> map = new HashMap<>(11);
+        map.put("a", "a");
+        
+//        new Thread(new ChangeT(111L)).start();
+//        new Thread(new ChangeT(-999L)).start();
+//        new Thread(new ChangeT(333L)).start();
+//        new Thread(new ChangeT(-444L)).start();
+//        new Thread(new ReadT()).start();
     }
 }
