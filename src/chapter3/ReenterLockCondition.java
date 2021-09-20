@@ -15,6 +15,7 @@ public class ReenterLockCondition {
             try {
                 lock.lock();
                 condition.await(); // condition必须先拿到锁才能await
+                condition.await(); // condition必须先拿到锁才能await
                 System.out.println(Thread.currentThread().getName() + " Thread is going on");
             } catch (InterruptedException e) {
                 e.printStackTrace();
